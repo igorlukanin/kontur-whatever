@@ -85,12 +85,12 @@
                     <path class='logo__image__text_colored' d='M35.322 5.122c3.223 0 6.178 1.449 8.109 3.986l.826 1.078 1.352.082c4.922.322 8.779 4.433 8.779 9.371 0 5.174-4.21 9.385-9.389 9.385h-18.132c-4.444 0-8.057-3.612-8.057-8.062 0-3.326 2.101-6.35 5.222-7.535l1.249-.478.484-1.252c1.508-3.935 5.347-6.575 9.557-6.575m0-2.986c-5.627 0-10.44 3.534-12.343 8.505-4.175 1.571-7.153 5.611-7.153 10.322 0 6.089 4.953 11.037 11.041 11.037h18.133c6.815 0 12.366-5.539 12.366-12.36 0-6.548-5.119-11.922-11.565-12.342-2.434-3.2-6.256-5.162-10.479-5.162z'></path>
                 </g>
             </defs>
+            <rect class='logo__image__background'></rect>
             <g class='logo__image__text'>
                 <use class='logo__image__text_kontur' xlink:href="#kontur-logo"></use>
                 <text class='logo__image__text_dot'>.</text>
                 <text class='logo__image__text_name logo__image__text_colored'></text>
-            </div>
-
+            </g>
         </svg>
     </div>
 
@@ -139,6 +139,13 @@
                 d3.select('.logo__image')
                     .attr('width', width)
                     .attr('height', height);
+
+                d3.select('.logo__image__background')
+                    .attr('x', 0)
+                    .attr('y', 0)
+                    .attr('width', width)
+                    .attr('height', height)
+                    .style('fill', '#fff');
 
                 d3.select('.logo__image__text')
                     .attr('transform', translateXY(width * .5, height * .3));
