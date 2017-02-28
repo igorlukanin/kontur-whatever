@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <style>
+        body, input {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14pt;
+            font-weight: 400;
+            color: #222;
+        }
+
+        body {
+            margin: 10vh;
+            text-align: center;
+        }
+
+        .input__field {
+            border: none;
+            outline: none;
+            border-bottom: solid 2px #eee;
+            font-size: 37px;
+            color: #666;
+            text-align: center;
+            padding-bottom: 0.1em;
+        }
+
+        .colors {
+            display: flex;
+            margin: 4em auto 8em;
+        }
+
+        .color__selector {
+            cursor: pointer;
+        }
+
+        .actions {
+            margin-top: 4em;
+        }
+
+        .actions__download {
+            display: inline-block;
+            border: solid 2px #eee;
+            border-radius: 10px;
+            color: #666;
+            cursor: pointer;
+            padding: 0.75em 1.5em 0.9em;
+            margin: 0.5em;
+
+            background-color: #fff;
+            transition: background-color 0.25s ease;
+        }
+
+        .actions__download:hover {
+            background-color: #eee;
+            transition: background-color 0.25s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='imput'>
+        <input class='input__field' type='text'/>
+    </div>
+
+    <div class='colors'></div>
+
+    <div class='logo'>
+        <svg class='logo__image'>
+            <defs>
+                <style>
+                    .logo__image__text {
+                        fill: #222;
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        font-weight: 400;
+                        font-size: 37px;
+                        -webkit-font-smoothing: antialiased;
+                    }
+                </style>
+                <g id='kontur-logo'>
+                    <path d='M14.783 11.332h-3.905l-7.823 8.525h-.07v-8.525h-2.985v18.617h2.984v-8.948h.07l8.219 8.948h4.187l-9.312-9.642 8.635-8.975zm58.883 7.627h-9.489v-7.627h-2.987v18.617h2.986v-8.458h9.489v8.458h2.986v-18.617h-2.986v7.627zm6.541-5.087h5.605v16.077h2.977v-16.077h5.588v-2.54h-14.17v2.54zm25.705 11.82c-.178.633-.302 1.091-.366 1.38h-.106c-.189-.762-.316-1.231-.385-1.418l-5.031-14.322h-3.308l7.271 18.578-1.488 3.529c-.756 1.796-1.879 2.688-3.385 2.688-.525 0-1.119.041-1.76-.178v2.525c.514.156 1.169.232 1.938.232 2.77 0 4.917-1.926 6.443-5.781l8.561-21.594h-3.091l-5.293 14.361zm26.702-12.298c-1.353-1.668-3.231-2.499-5.622-2.499-2.826 0-4.974 1.229-6.439 3.703h-.074v-3.266h-2.984v27.178h2.984v-11.254h.074c1.309 2.087 3.17 3.127 5.58 3.127 2.631 0 4.703-.937 6.216-2.808 1.522-1.876 2.273-4.365 2.273-7.49 0-2.793-.667-5.023-2.008-6.691zm-2.581 12.409c-1.019 1.377-2.437 2.076-4.24 2.076-1.545 0-2.812-.54-3.811-1.615-1.004-1.07-1.504-2.377-1.504-3.916v-2.603c0-1.819.529-3.331 1.58-4.533 1.059-1.208 2.452-1.812 4.183-1.812 1.636 0 2.936.585 3.892 1.763.957 1.176 1.441 2.8 1.441 4.869 0 2.463-.513 4.388-1.541 5.771z'></path>
+                    <path class='logo__image__text_colored' d='M35.322 5.122c3.223 0 6.178 1.449 8.109 3.986l.826 1.078 1.352.082c4.922.322 8.779 4.433 8.779 9.371 0 5.174-4.21 9.385-9.389 9.385h-18.132c-4.444 0-8.057-3.612-8.057-8.062 0-3.326 2.101-6.35 5.222-7.535l1.249-.478.484-1.252c1.508-3.935 5.347-6.575 9.557-6.575m0-2.986c-5.627 0-10.44 3.534-12.343 8.505-4.175 1.571-7.153 5.611-7.153 10.322 0 6.089 4.953 11.037 11.041 11.037h18.133c6.815 0 12.366-5.539 12.366-12.36 0-6.548-5.119-11.922-11.565-12.342-2.434-3.2-6.256-5.162-10.479-5.162z'></path>
+                </g>
+            </defs>
+            <g class='logo__image__text'>
+                <use class='logo__image__text_kontur' xlink:href="#kontur-logo"></use>
+                <text class='logo__image__text_dot'>.</text>
+                <text class='logo__image__text_name logo__image__text_colored'></text>
+            </div>
+
+        </svg>
+    </div>
+
+    <div class='actions'>
+        <div class='actions__download actions__download_svg'>Скачать SVG</div>
+        <div class='actions__download actions__download_png'>Скачать PNG</div>
+    </div>
+
+    <script>
+        (function() {
+            var colors = [
+                '#d70c17', // Ритейл, УЦ, Школа
+                '#ff5500', // Экстерн
+                '#f8982d', // Норматив
+                '#65a844', // ОФД
+                '#4d9068', // Фокуc, Декларант
+                '#00aa90', // Диадок
+                '#31add7', // Эксперт
+                '#1e79be', // Эльба, Отчёт ПФ, EDI, Закупки, Алкодекларация, Алкосверка
+                '#a23a99' // Бухгалтерия
+                ],
+                defaultName = 'что-то там',
+                defaultColorSizeVW = 5,
+                colorSizeRatio = 1.618;
+
+            var getRandomColor = function(colors) {
+                var index = Math.floor(Math.random() * colors.length);
+                return colors[index];
+            };
+
+            var drawLogo = function(color, name) {
+                var translateXY = function(x, y) {
+                    return 'translate(' + x + ', ' + y + ')';
+                };
+
+                var getNameHtml = function(name) {
+                    return name
+                        .toLowerCase()
+                        .replace('ё', 'е')
+                        .replace(/\s+/g, '&thinsp;');
+                };
+
+                var width = 600,
+                    height = 100;
+
+                d3.select('.logo__image')
+                    .attr('width', width)
+                    .attr('height', height);
+
+                d3.select('.logo__image__text')
+                    .attr('transform', translateXY(width * .5, height * .3));
+
+                d3.select('.logo__image__text_kontur')
+                    .attr('transform', translateXY(-143, 0));
+
+                d3.select('.logo__image__text_dot')
+                    .attr('transform', translateXY(-6, 30));
+
+                d3.select('.logo__image__text_name')
+                    .attr('transform', translateXY(4, 30))
+                    .html(getNameHtml(name));
+
+                d3.selectAll('.logo__image__text_colored')
+                    .attr('fill', color);
+            };
+
+            var redrawLogo = function(product) {
+                drawLogo(product.color, product.name === '' ? defaultName : product.name);
+            };
+
+            var product = {
+                name: '',
+                color: getRandomColor(colors)
+            };
+
+            d3.select('.input__field')
+                .attr('placeholder', defaultName)
+                .attr('value', product.name)
+                .on('input', function() {
+                    product.name = this.value;
+                    redrawLogo(product);
+                })
+                .node().focus();
+
+            d3.select('.colors')
+                .style('width', (colors.length * defaultColorSizeVW) + 'vw')
+                .selectAll('.color__selector')
+                .data(colors)
+                .enter()
+                .append('div')
+                .classed('color__selector', true)
+                .style('width', defaultColorSizeVW + 'vw')
+                .style('height', (defaultColorSizeVW / colorSizeRatio) + 'vw')
+                .style('background-color', function(color) { return color; })
+                .on('click', function(color) {
+                    product.color = color;
+                    redrawLogo(product);
+                });
+
+            d3.select('.actions__download_svg')
+                .on('click', function() {
+                    var svg = d3.select('.logo__image'),
+                        data = new XMLSerializer().serializeToString(svg.node()),
+                        url = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(data)));
+
+                    window.open(url);
+                });
+
+            d3.select('.actions__download_png')
+                .on('click', function() {
+                    var svg = d3.select('.logo__image'),
+                        width = +svg.attr('width'),
+                        height = +svg.attr('height'),
+                        data = new XMLSerializer().serializeToString(svg.node()),
+                        url = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(data)));
+
+                    var canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    var img = new Image();
+                    img.onload = function() {
+                        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                    };
+                    img.src = url;
+
+                    // Can't open new window directly from img.onload
+                    setTimeout(function() {
+                        window.open(canvas.toDataURL('image/png'));
+                    }, 100);
+                });
+
+            redrawLogo(product);
+        })();
+    </script>
+
+    <!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43135859 = new Ya.Metrika({ id:43135859, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/43135859" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+</body>
+
+</html>
