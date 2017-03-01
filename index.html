@@ -113,8 +113,7 @@
                 ],
                 defaultName = 'что-то там',
                 defaultColorSizeVW = 5,
-                colorSizeRatio = 1.618,
-                leftShift = -325;
+                colorSizeRatio = 1.618;
 
             var getRandomColor = function(colors) {
                 var index = Math.floor(Math.random() * colors.length);
@@ -206,12 +205,12 @@
                         url = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(data)));
 
                     var canvas = document.createElement('canvas');
-                    canvas.width = width;
+                    canvas.width = 240 + parseFloat(d3.select('.logo__image__text_name').style('width').replace(/px$/, ''));
                     canvas.height = height;
 
                     var img = new Image();
                     img.onload = function() {
-                        canvas.getContext('2d').drawImage(img, leftShift, 0, width, height);
+                        canvas.getContext('2d').drawImage(img, -310, 0, width, height);
                     };
                     img.src = url;
 
