@@ -200,7 +200,7 @@
             d3.select('.actions__download_svg')
                 .on('click', function() {
                     var svg = d3.select('.logo__image'),
-                        data = new XMLSerializer().serializeToString(svg.node()),
+                        data = '<?xml version="1.0" encoding="UTF-8"?>' + new XMLSerializer().serializeToString(svg.node()),
                         url = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(data)));
 
                     window.open(url);
@@ -211,7 +211,7 @@
                     var svg = d3.select('.logo__image'),
                         width = +svg.attr('width'),
                         height = +svg.attr('height'),
-                        data = new XMLSerializer().serializeToString(svg.node()),
+                        data = '<?xml version="1.0" encoding="UTF-8"?>' + new XMLSerializer().serializeToString(svg.node()),
                         url = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(data)));
 
                     var canvas = document.createElement('canvas');
