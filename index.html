@@ -114,7 +114,8 @@
                 ],
                 defaultName = 'что-то там',
                 defaultColorSizeVW = 5,
-                colorSizeRatio = 1.618;
+                colorSizeRatio = 1.618,
+                leftShift = -325;
 
             var getRandomColor = function(colors) {
                 var index = Math.floor(Math.random() * colors.length);
@@ -220,7 +221,7 @@
 
                     var img = new Image();
                     img.onload = function() {
-                        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                        canvas.getContext('2d').drawImage(img, leftShift, 0, width, height);
                     };
                     img.src = url;
 
